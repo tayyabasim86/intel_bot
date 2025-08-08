@@ -23,12 +23,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # ⬇️ This is the critical fix — use the SECRET value directly
       - name: Create service account key file
         run: |
           echo '${{ secrets.GCP_SERVICE_ACCOUNT_JSON }}' > sa.json
 
-      # (Optional) sanity check the file exists and isn't empty
       - name: Debug key size
         run: |
           ls -l sa.json
@@ -37,4 +35,11 @@ jobs:
       - name: Run bot
         env:
           GCP_SERVICE_ACCOUNT_JSON_FILE: ${{ github.workspace }}/sa.json
-          SHEET_ID: $_
+          SHEET_ID: ${{ secrets.SHEET_ID }}
+          SHEET_TAB: ${{ secrets.SHEET_TAB }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          GMAIL_TO: ${{ secrets.GMAIL_TO }}
+        run: |
+          python src/main.py
