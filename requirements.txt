@@ -1,0 +1,9 @@
+feedparser
+trafilatura
+beautifulsoup4
+requests
+python-dotenv
+gspread
+google-auth
+pandas
+openpyxl
